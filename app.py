@@ -56,7 +56,7 @@ def insert_product():
         db.session.commit()
         print(mensaje)
 
-# Funcion para mostrar todos los productos, por 
+# Funcion para mostrar todos los productos, por stock agotado y id = 3
 def query_products():
     with app.app_context():
         # 1. Listar todo
@@ -78,12 +78,39 @@ def query_products():
         else:
             print("Producto No Encontrado!")
 
+#Funcion para actualizar producto
+def update_product():
+    with app.app_context():
+        # Búsqueda directa por ID
+        p_id = input("ID del producto a editar: ")
+        item = Product.query.filter_by(id=p_id).first()
 
+        if not item:
+            return print("Error: ID no encontrado.")
 
+        # Captura de nuevos datos
+        nuevo_nombre = input("Nuevo nombre: ")
+        nuevo_precio = input("Nuevo precio: ")
+        nuevo_stock = input("Nuevo stock (Enter para 0): ")
+
+        # Actualizamos atributos 
+        item.name = nuevo_nombre
+        item.price = float(nuevo_precio)
         
+        # Si hay valor en nuevo_stock
+        if nuevo_stock:
+            item.stock = int(nuevo_stock)
+        else:
+            item.stock = 0
+
+
+        db.session.commit()
+        print("Registro actualizado")
+
 
 
 if __name__ == "__main__":
     #init_db()
-    insert_product()
+    #insert_product()
     query_products()
+    update_product()
