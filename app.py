@@ -71,8 +71,9 @@ def query_products():
             print(f"[{i}] {pro}")
 
         # 3. Búsqueda por ID
-        print("\n--- BUSCAR POR ID (3) ---")
-        prod = Product.query.filter_by(id=2).first()
+        print("\n--- BUSCAR POR ID  ---")
+        p_id = int(input("ID del producto a mostrar: "))
+        prod = Product.query.filter_by(id=p_id).first()
         if prod:
             print(prod)
         else:
@@ -103,14 +104,30 @@ def update_product():
         else:
             item.stock = 0
 
-
+        #Guardamos en la base de datos
         db.session.commit()
         print("Registro actualizado")
 
-
+#Funcion para eliminar un producto
+# Funcion para eliminar un producto existente de la base de datos
+def delete_product():
+    with app.app_context():
+        # Busqueda por el ID
+        p_id = int(input("ID del producto a eliminar: "))
+        product = Product.query.filter_by(id=p_id).first()
+        # Si existe el producto lo eliminamos 
+        if product:
+            # Lo eliminamos
+            db.session.delete(product)
+            # Guardamos en la base de datos
+            db.session.commit()
+            print("Producto eliminado")
+        else:
+            print("Producto no existe")
 
 if __name__ == "__main__":
     #init_db()
     #insert_product()
     query_products()
-    update_product()
+    #update_product()
+    delete_product()
