@@ -56,6 +56,28 @@ def insert_product():
         db.session.commit()
         print(mensaje)
 
+# Funcion para mostrar todos los productos, por 
+def query_products():
+    with app.app_context():
+        # 1. Listar todo
+        print("\n--- TODOS LOS PRODUCTOS ---")
+        for i, pro in enumerate(Product.query.all(), 1):
+            print(f"[{i}] {pro}")
+
+        # 2. Filtrar sin stock
+        print("\n--- AGOTADOS (STOCK 0) ---")
+        agotados = Product.query.filter(Product.stock == 0).all()
+        for i, pro in enumerate(agotados, 1):
+            print(f"[{i}] {pro}")
+
+        # 3. Búsqueda por ID
+        print("\n--- BUSCAR POR ID (3) ---")
+        prod = Product.query.filter_by(id=2).first()
+        if prod:
+            print(prod)
+        else:
+            print("Producto No Encontrado!")
+
 
 
         
@@ -64,3 +86,4 @@ def insert_product():
 if __name__ == "__main__":
     #init_db()
     insert_product()
+    query_products()
