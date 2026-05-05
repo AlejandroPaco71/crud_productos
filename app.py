@@ -29,6 +29,7 @@ def init_db():
         
 #Funcion para Inseratar productos 
 def insert_product():
+    print("\n--- AÑADIR NUEVO PRODUCTO ---\n")
     with app.app_context():
         # Captura de datos
         nombre_prod = input("Ingrese el nombre: ")
@@ -81,6 +82,7 @@ def query_products():
 
 #Funcion para actualizar producto
 def update_product():
+    print("\n--- EDITAR PRODUCTO ---\n")
     with app.app_context():
         # Búsqueda directa por ID
         p_id = input("ID del producto a editar: ")
@@ -111,6 +113,7 @@ def update_product():
 #Funcion para eliminar un producto
 # Funcion para eliminar un producto existente de la base de datos
 def delete_product():
+    print("\n--- ELIMINAR PRODUCTO ---\n")
     with app.app_context():
         # Busqueda por el ID
         p_id = int(input("ID del producto a eliminar: "))
@@ -124,10 +127,28 @@ def delete_product():
             print("Producto eliminado")
         else:
             print("Producto no existe")
-
+            
 if __name__ == "__main__":
-    #init_db()
-    #insert_product()
-    query_products()
-    #update_product()
-    delete_product()
+    #Iniciamos la creacion de la base de datos
+    init_db()
+    #Un bucle while 
+    while True:
+        print("\n" + " INVENTARIO DE PRODUCTOS  ".center(50, "="))
+        print("1. Añadir | 2. Listar | 3. Editar | 4. Borrar | 5. Salir")
+        print("=" * 50)
+        
+        #Pedimos que ingrese un numero del menu
+        opcion = int(input("Seleccione una opción: "))
+        
+        if opcion == 1:
+            insert_product()
+        elif opcion == 2:
+            query_products()
+        elif opcion == 3:
+            update_product()
+        elif opcion == 4:
+            delete_product()
+        elif opcion == 5:
+            break
+        else:
+            print("Opción no válida.")
